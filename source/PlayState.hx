@@ -68,7 +68,7 @@ class PlayState extends FlxState {
 			}
 		}
 
-		trace("Firing: " + closest);
+		closest.fireTurret(cursorPosition);
 	}
 
 	function placeBuilding(building:Building, segment:Int) {

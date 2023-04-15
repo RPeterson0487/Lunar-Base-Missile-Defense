@@ -1,5 +1,6 @@
 package;
 
+import flixel.math.FlxPoint;
 import flixel.util.FlxColor;
 
 class Turret extends Building {
@@ -9,5 +10,7 @@ class Turret extends Building {
 		makeGraphic(Std.int(turretSize * .75), turretSize, FlxColor.GREEN);
 	}
 
-	function fireTurret() {}
+	public function fireTurret(coordinate:FlxPoint) {
+		trace("Firing at " + coordinate);
+	}
 }
