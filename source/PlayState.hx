@@ -59,16 +59,18 @@ class PlayState extends FlxState {
 		var turretPosition:FlxPoint;
 		var turretDistance:Float = 0;
 
-		for (i in turretsGroup) {
-			turretPosition = i.getPosition();
-			turretDistance = turretPosition.dist(cursorPosition);
-			if ((turretDistance < shortestDistance) && i.alive) {
-				shortestDistance = turretDistance;
-				closest = i;
+		if (turretsGroup.countLiving() > 0) {
+			for (i in turretsGroup) {
+				turretPosition = i.getPosition();
+				turretDistance = turretPosition.dist(cursorPosition);
+				if ((turretDistance < shortestDistance) && i.alive) {
+					shortestDistance = turretDistance;
+					closest = i;
+				}
 			}
-		}
 
-		closest.fireTurret(cursorPosition);
+			closest.fireTurret((closest.x + (closest.width / 2)), closest.y, cursorPosition);
+		}
 	}
 
 	function placeBuilding(building:Building, segment:Int) {
