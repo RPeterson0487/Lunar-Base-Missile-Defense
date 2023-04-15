@@ -1,9 +1,8 @@
 package;
 
-import flixel.FlxSprite;
 import flixel.util.FlxColor;
 
-class City extends FlxSprite {
+class City extends Building {
 	public function new(citySize = 50) {
 		super();
 
