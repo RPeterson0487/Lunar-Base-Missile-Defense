@@ -8,4 +8,6 @@ class Turret extends Building {
 
 		makeGraphic(Std.int(turretSize * .75), turretSize, FlxColor.GREEN);
 	}
+
+	function fireTurret() {}
 }
