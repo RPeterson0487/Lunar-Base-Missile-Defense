@@ -10,13 +10,11 @@ class PlayState extends FlxState {
 	static inline var SEGMENTS_TOTAL:Int = 9;
 	static var SEGMENTS_TURRET = [1, 5, 9];
 	static var SEGMENTS_CITY = [2, 3, 4, 6, 7, 8];
+	static inline var TIMER_MAX:Float = 5;
 
 	var basicLandscape:Landscape;
 	var buildingsGroup = new FlxTypedGroup<Building>();
 	var turretsGroup = new FlxTypedGroup<Turret>();
-
-	static inline var TIMER_MAX:Float = 5;
-
 	var timerRemaining:Float = TIMER_MAX;
 
 	override public function create() {
