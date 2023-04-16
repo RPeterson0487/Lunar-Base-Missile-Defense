@@ -25,7 +25,7 @@ class TurretMissile extends FlxSprite {
 
 	override function update(elapsed:Float) {
 		if (y <= destination.y) {
-			var explode = new Explosion(destination.x, destination.y);
+			var explode = new Explosion(destination.x, destination.y, true);
 			(cast(FlxG.state, PlayState)).explosionGroup.add(explode);
 			kill();
 		}
