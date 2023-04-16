@@ -45,7 +45,7 @@ class HUD extends FlxTypedGroup<FlxSprite> {
 
 	function setupTimer() {
 		timeInformation = new FlxText();
-		timeInformation.text = "You've lasted " + Std.int(timeElapsed) + " seconds.";
+		timeInformation.text = "YOU'VE LASTED " + Std.int(timeElapsed) + " SECONDS.";
 		timeInformation.size = Std.int(background.height - 15);
 		timeInformation.x = HUD_SIDE_SPACING;
 		timeInformation.y = background.getGraphicMidpoint().y - (timeInformation.height / 2);
@@ -55,7 +55,7 @@ class HUD extends FlxTypedGroup<FlxSprite> {
 
 	function setupScore() {
 		scoreInformation = new FlxText();
-		scoreInformation.text = "Missiles intercepted: " + scoreCount;
+		scoreInformation.text = "MISSILES INTERCEPTED: " + scoreCount;
 		scoreInformation.size = Std.int(background.height - 15);
 		scoreInformation.x = FlxG.width - scoreInformation.width - HUD_SIDE_SPACING;
 		scoreInformation.y = timeInformation.y;
@@ -65,13 +65,13 @@ class HUD extends FlxTypedGroup<FlxSprite> {
 
 	function updateTimer(elapsed:Float) {
 		if (!gameOver) {
-			timeInformation.text = "You've lasted " + Std.int(timeElapsed += elapsed) + " seconds.";
+			timeInformation.text = "YOU'VE LASTED " + Std.int(timeElapsed += elapsed) + " SECONDS.";
 		}
 	}
 
 	public function updateScore() {
 		scoreCount += 1;
-		scoreInformation.text = "Missiles intercepted: " + scoreCount;
+		scoreInformation.text = "MISSILES INTERCEPTED: " + scoreCount;
 	}
 
 	function showGameOverScreen() {

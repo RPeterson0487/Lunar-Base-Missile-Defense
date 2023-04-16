@@ -4,13 +4,14 @@ import flixel.FlxSprite;
 import flixel.util.FlxColor;
 
 class Explosion extends FlxSprite {
-	static inline var EXPLOSION_DURATION:Float = 3;
+	static inline var EXPLOSION_DURATION:Float = 5;
 
 	public var scoreable:Bool = false;
 
 	var timerRemaining:Float = EXPLOSION_DURATION;
 
-	public function new(xPosition:Float, yPosition:Float, _scoreable:Bool = false, explosionSize:Int = 50) {
+	public function new(xPosition:Float, yPosition:Float, _scoreable:Bool = false,
+			explosionSize:Int = 50) {
 		super();
 
 		scoreable = _scoreable;
