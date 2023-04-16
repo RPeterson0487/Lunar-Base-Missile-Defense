@@ -7,7 +7,7 @@ import flixel.math.FlxVelocity;
 import flixel.util.FlxColor;
 
 class TurretMissile extends FlxSprite {
-	static inline var MISSILESPEED = 100;
+	static inline var MISSILESPEED = 200;
 
 	var destination:FlxPoint;
 

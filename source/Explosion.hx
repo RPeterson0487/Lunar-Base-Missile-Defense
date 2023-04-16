@@ -4,7 +4,7 @@ import flixel.FlxSprite;
 import flixel.util.FlxColor;
 
 class Explosion extends FlxSprite {
-	static inline var EXPLOSION_DURATION:Float = 5;
+	static inline var EXPLOSION_DURATION:Float = 3;
 
 	public var scoreable:Bool = false;
 
