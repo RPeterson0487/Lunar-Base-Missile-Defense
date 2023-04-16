@@ -1,5 +1,6 @@
 package;
 
+import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.math.FlxPoint;
 import flixel.math.FlxVelocity;
@@ -24,6 +25,8 @@ class TurretMissile extends FlxSprite {
 
 	override function update(elapsed:Float) {
 		if (y <= destination.y) {
+			var explode = new Explosion(destination.x, destination.y);
+			(cast(FlxG.state, PlayState)).explosionGroup.add(explode);
 			kill();
 		}
 
