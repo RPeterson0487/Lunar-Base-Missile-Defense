@@ -26,6 +26,8 @@ class PlayState extends FlxState {
 	override public function create() {
 		super.create();
 
+		FlxG.mouse.load(AssetPaths.crosshair__png__png, 1, -8, -8);
+
 		setupBasicLandscape();
 		setupBasicBuildings();
 		add(enemyMissileGroup);
