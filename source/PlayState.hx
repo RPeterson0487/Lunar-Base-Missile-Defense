@@ -92,10 +92,6 @@ class PlayState extends FlxState {
 	function fireEnemyMissiles() {
 		var numberOfMissiles = FlxG.random.int(1, 20);
 
-		for (building in buildingsGroup) {
-			trace("check building", building);
-		}
-
 		for (i in 1...numberOfMissiles) {
 			var launchPosition = FlxG.random.float(0, FlxG.width);
 			var target = buildingsGroup.members[FlxG.random.int(0, buildingsGroup.length - 1)];
