@@ -22,12 +22,15 @@ class PlayState extends FlxState {
 	var timerRemaining:Float = TIMER_MAX;
 
 	override public function create() {
+		super.create();
+
 		setupBasicLandscape();
 		setupBasicBuildings();
 		add(enemyMissileGroup);
 		add(explosionGroup);
 
-		super.create();
+		var hud = new HUD(Std.int(basicLandscape.height / 2));
+		add(hud);
 	}
 
 	override public function update(elapsed:Float) {
