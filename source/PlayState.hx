@@ -29,6 +29,12 @@ class PlayState extends FlxState {
 			fireClosestAvailableTurret();
 		}
 
+		if (FlxG.mouse.justPressedMiddle) {
+			var boom = new Explosion(FlxG.mouse.getScreenPosition().x,
+				FlxG.mouse.getScreenPosition().y);
+			add(boom);
+		}
+
 		timerRemaining -= elapsed;
 		if (timerRemaining <= 0) {
 			fireEnemyMissiles();

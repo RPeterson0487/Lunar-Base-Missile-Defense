@@ -13,9 +13,9 @@ class Building extends FlxSprite {
 	}
 
 	override function update(elapsed:Float) {
-		if (FlxG.mouse.justPressedMiddle && FlxG.mouse.overlaps(this)) {
+		/* if (FlxG.mouse.justPressedMiddle && FlxG.mouse.overlaps(this)) {
 			kill();
-		}
+		}*/
 
 		super.update(elapsed);
 	}
