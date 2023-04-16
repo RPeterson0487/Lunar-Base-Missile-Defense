@@ -42,7 +42,7 @@ class PlayState extends FlxState {
 		}
 
 		FlxG.overlap(explosionGroup, enemyMissileGroup, collideEnemyMissileAndExplosion);
-
+		FlxG.overlap(enemyMissileGroup, buildingsGroup, collideEnemyMissileAndBuilding);
 		super.update(elapsed);
 	}
 
@@ -106,7 +106,12 @@ class PlayState extends FlxState {
 		}
 	}
 
-	function collideEnemyMissileAndExplosion(explosion:Explosion, enemyMissile:EnemyMissile){
+	function collideEnemyMissileAndExplosion(explosion:Explosion, enemyMissile:EnemyMissile) {
 		enemyMissile.explode();
+	}
+
+	function collideEnemyMissileAndBuilding(enemyMissile:EnemyMissile, building:Building) {
+		enemyMissile.explode();
+		building.destroyBuilding();
 	}
 }

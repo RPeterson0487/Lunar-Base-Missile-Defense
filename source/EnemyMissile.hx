@@ -14,7 +14,7 @@ class EnemyMissile extends FlxSprite {
 		FlxVelocity.moveTowardsObject(this, target, 0, 10000);
 	}
 
-	public function explode() {
+	public function explode(?explosionSize:Int) {
 		var explosion = new Explosion(x, y);
 		(cast(FlxG.state, PlayState)).explosionGroup.add(explosion);
 		kill();
