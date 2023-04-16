@@ -10,11 +10,14 @@ class HUD extends FlxTypedGroup<FlxSprite> {
 	static inline var HUD_COLOR = FlxColor.BLACK;
 	static inline var HUD_SIDE_SPACING:Float = 100;
 
+	public var gameOver:Bool = false;
+
 	var background:FlxSprite;
 	var timeInformation:FlxText;
 	var timeElapsed:Float = 0;
 	var scoreInformation:FlxText;
 	var scoreCount:Int = 0;
+	var gameOverBoxShowing:Bool = false;
 
 	public function new(hudHeight:Int) {
 		super();
@@ -24,16 +27,20 @@ class HUD extends FlxTypedGroup<FlxSprite> {
 		setupScore();
 	}
 
+	override function update(elapsed:Float) {
+		updateTimer(elapsed);
+
+		if (gameOver && !gameOverBoxShowing) {
+			showGameOverScreen();
+		}
+
+		super.update(elapsed);
+	}
+
 	function setupBackground(hudHeight:Int) {
 		background = new FlxSprite(0, FlxG.height - hudHeight);
 		background.makeGraphic(FlxG.width, hudHeight, HUD_COLOR);
 		add(background);
-	}
-
-	override function update(elapsed:Float) {
-		updateTimer(elapsed);
-
-		super.update(elapsed);
 	}
 
 	function setupTimer() {
@@ -57,11 +64,24 @@ class HUD extends FlxTypedGroup<FlxSprite> {
 	}
 
 	function updateTimer(elapsed:Float) {
-		timeInformation.text = "You've lasted " + Std.int(timeElapsed += elapsed) + " seconds.";
+		if (!gameOver) {
+			timeInformation.text = "You've lasted " + Std.int(timeElapsed += elapsed) + " seconds.";
+		}
 	}
 
 	public function updateScore() {
 		scoreCount += 1;
 		scoreInformation.text = "Missiles intercepted: " + scoreCount;
+	}
+
+	function showGameOverScreen() {
+		gameOverBoxShowing = true;
+
+		var gameOverBox = new FlxText();
+		gameOverBox.text = "GAME OVER!\nPRESS R TO RESET";
+		gameOverBox.size = 64;
+		gameOverBox.screenCenter();
+
+		add(gameOverBox);
 	}
 }

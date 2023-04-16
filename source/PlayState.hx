@@ -10,16 +10,18 @@ class PlayState extends FlxState {
 	static inline var SEGMENTS_TOTAL:Int = 9;
 	static var SEGMENTS_TURRET = [1, 5, 9];
 	static var SEGMENTS_CITY = [2, 3, 4, 6, 7, 8];
-	static inline var TIMER_MAX:Float = 5;
+	static inline var TIMER_MAX:Float = .5;
 
 	public var explosionGroup = new FlxTypedGroup<Explosion>();
 
 	var basicLandscape:Landscape;
 	var buildingsGroup = new FlxTypedGroup<Building>();
+	var citiesGroup = new FlxTypedGroup<Building>();
 	var turretsGroup = new FlxTypedGroup<Turret>();
 	var enemyMissileGroup = new FlxTypedGroup<EnemyMissile>();
 	var timerRemaining:Float = TIMER_MAX;
 	var hud:HUD;
+	var gameOver:Bool = false;
 
 	override public function create() {
 		super.create();
@@ -34,12 +36,20 @@ class PlayState extends FlxState {
 	}
 
 	override public function update(elapsed:Float) {
-		if (FlxG.mouse.justPressed) {
+		if (FlxG.keys.justPressed.ZERO){
+			endGame();
+		}
+
+		if (FlxG.mouse.justPressed && !gameOver) {
 			fireClosestAvailableTurret();
 		}
 
+		if (FlxG.keys.justPressed.R) {
+			FlxG.switchState(new PlayState());
+		}
+
 		timerRemaining -= elapsed;
-		if (timerRemaining <= 0) {
+		if (timerRemaining <= 0 && !gameOver) {
 			fireEnemyMissiles();
 			timerRemaining += TIMER_MAX;
 		}
@@ -48,8 +58,8 @@ class PlayState extends FlxState {
 		FlxG.overlap(enemyMissileGroup, buildingsGroup, collideEnemyMissileAndBuilding);
 		FlxG.overlap(enemyMissileGroup, basicLandscape, collideEnemyMissileAndLandscape);
 
-		if (FlxG.keys.justPressed.R) {
-			FlxG.switchState(new PlayState());
+		if (citiesGroup.countLiving() == 0) {
+			endGame();
 		}
 
 		super.update(elapsed);
@@ -65,6 +75,7 @@ class PlayState extends FlxState {
 			var basicCity = new City();
 			placeBuilding(basicCity, segment);
 			buildingsGroup.add(basicCity);
+			citiesGroup.add(basicCity);
 		}
 
 		for (segment in SEGMENTS_TURRET) {
@@ -132,5 +143,10 @@ class PlayState extends FlxState {
 
 	function collideEnemyMissileAndLandscape(enemyMissile:EnemyMissile, landscape:Landscape) {
 		enemyMissile.explode(25);
+	}
+
+	function endGame() {
+		gameOver = true;
+		hud.gameOver = true;
 	}
 }
