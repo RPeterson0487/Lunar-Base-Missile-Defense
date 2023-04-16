@@ -10,7 +10,7 @@ class PlayState extends FlxState {
 	static inline var SEGMENTS_TOTAL:Int = 9;
 	static var SEGMENTS_TURRET = [1, 5, 9];
 	static var SEGMENTS_CITY = [2, 3, 4, 6, 7, 8];
-	static inline var TIMER_MAX:Float = 5;
+	static inline var TIMER_MAX:Float = 2;
 
 	public var explosionGroup = new FlxTypedGroup<Explosion>();
 
@@ -38,10 +38,6 @@ class PlayState extends FlxState {
 	}
 
 	override public function update(elapsed:Float) {
-		if (FlxG.keys.justPressed.NINE) {
-			endGame();
-		}
-
 		if (FlxG.mouse.justPressed && !gameOver) {
 			fireClosestAvailableTurret();
 		}
@@ -118,7 +114,7 @@ class PlayState extends FlxState {
 	}
 
 	function fireEnemyMissiles() {
-		var numberOfMissiles = FlxG.random.int(1, 20);
+		var numberOfMissiles = FlxG.random.int(1, 5);
 
 		for (i in 1...numberOfMissiles) {
 			var launchPosition = FlxG.random.float(0, FlxG.width);
