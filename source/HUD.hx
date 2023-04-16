@@ -21,7 +21,7 @@ class HUD extends FlxTypedGroup<FlxSprite> {
 
 		setupBackground(hudHeight);
 		setupTimer();
-        setupScore();
+		setupScore();
 	}
 
 	function setupBackground(hudHeight:Int) {
@@ -32,6 +32,7 @@ class HUD extends FlxTypedGroup<FlxSprite> {
 
 	override function update(elapsed:Float) {
 		updateTimer(elapsed);
+
 		super.update(elapsed);
 	}
 
@@ -57,5 +58,10 @@ class HUD extends FlxTypedGroup<FlxSprite> {
 
 	function updateTimer(elapsed:Float) {
 		timeInformation.text = "You've lasted " + Std.int(timeElapsed += elapsed) + " seconds.";
+	}
+
+	public function updateScore() {
+		scoreCount += 1;
+		scoreInformation.text = "Missiles intercepted: " + scoreCount;
 	}
 }

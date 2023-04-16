@@ -12,14 +12,14 @@ class PlayState extends FlxState {
 	static var SEGMENTS_CITY = [2, 3, 4, 6, 7, 8];
 	static inline var TIMER_MAX:Float = 5;
 
+	public var explosionGroup = new FlxTypedGroup<Explosion>();
+
 	var basicLandscape:Landscape;
 	var buildingsGroup = new FlxTypedGroup<Building>();
 	var turretsGroup = new FlxTypedGroup<Turret>();
 	var enemyMissileGroup = new FlxTypedGroup<EnemyMissile>();
-
-	public var explosionGroup = new FlxTypedGroup<Explosion>();
-
 	var timerRemaining:Float = TIMER_MAX;
+	var hud:HUD;
 
 	override public function create() {
 		super.create();
@@ -29,7 +29,7 @@ class PlayState extends FlxState {
 		add(enemyMissileGroup);
 		add(explosionGroup);
 
-		var hud = new HUD(Std.int(basicLandscape.height / 2));
+		hud = new HUD(Std.int(basicLandscape.height / 2));
 		add(hud);
 	}
 
@@ -116,7 +116,13 @@ class PlayState extends FlxState {
 	}
 
 	function collideEnemyMissileAndExplosion(explosion:Explosion, enemyMissile:EnemyMissile) {
-		enemyMissile.explode();
+		if (explosion.scoreable) {
+			enemyMissile.explode(true);
+			hud.updateScore();
+		}
+		else {
+			enemyMissile.explode();
+		}
 	}
 
 	function collideEnemyMissileAndBuilding(enemyMissile:EnemyMissile, building:Building) {
