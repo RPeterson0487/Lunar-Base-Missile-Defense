@@ -1,5 +1,6 @@
 package;
 
+import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.math.FlxVelocity;
 import flixel.util.FlxColor;
@@ -11,5 +12,11 @@ class EnemyMissile extends FlxSprite {
 		makeGraphic(7, 7, FlxColor.RED);
 
 		FlxVelocity.moveTowardsObject(this, target, 0, 10000);
+	}
+
+	public function explode(?explosionSize:Int) {
+		var explosion = new Explosion(x, y);
+		(cast(FlxG.state, PlayState)).explosionGroup.add(explosion);
+		kill();
 	}
 }

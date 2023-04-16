@@ -15,11 +15,17 @@ class PlayState extends FlxState {
 	var basicLandscape:Landscape;
 	var buildingsGroup = new FlxTypedGroup<Building>();
 	var turretsGroup = new FlxTypedGroup<Turret>();
+	var enemyMissileGroup = new FlxTypedGroup<EnemyMissile>();
+
+	public var explosionGroup = new FlxTypedGroup<Explosion>();
+
 	var timerRemaining:Float = TIMER_MAX;
 
 	override public function create() {
 		setupBasicLandscape();
 		setupBasicBuildings();
+		add(enemyMissileGroup);
+		add(explosionGroup);
 
 		super.create();
 	}
@@ -33,6 +39,14 @@ class PlayState extends FlxState {
 		if (timerRemaining <= 0) {
 			fireEnemyMissiles();
 			timerRemaining += TIMER_MAX;
+		}
+
+		FlxG.overlap(explosionGroup, enemyMissileGroup, collideEnemyMissileAndExplosion);
+		FlxG.overlap(enemyMissileGroup, buildingsGroup, collideEnemyMissileAndBuilding);
+		FlxG.overlap(enemyMissileGroup, basicLandscape, collideEnemyMissileAndLandscape);
+
+		if (FlxG.keys.justPressed.R) {
+			FlxG.switchState(new PlayState());
 		}
 
 		super.update(elapsed);
@@ -94,7 +108,20 @@ class PlayState extends FlxState {
 			var launchPosition = FlxG.random.float(0, FlxG.width);
 			var target = buildingsGroup.members[FlxG.random.int(0, buildingsGroup.length - 1)];
 			var incoming = new EnemyMissile(launchPosition, 0, target);
-			add(incoming);
+			enemyMissileGroup.add(incoming);
 		}
+	}
+
+	function collideEnemyMissileAndExplosion(explosion:Explosion, enemyMissile:EnemyMissile) {
+		enemyMissile.explode();
+	}
+
+	function collideEnemyMissileAndBuilding(enemyMissile:EnemyMissile, building:Building) {
+		enemyMissile.explode();
+		building.destroyBuilding();
+	}
+
+	function collideEnemyMissileAndLandscape(enemyMissile:EnemyMissile, landscape:Landscape) {
+		enemyMissile.explode(25);
 	}
 }

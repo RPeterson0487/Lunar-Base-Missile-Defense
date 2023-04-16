@@ -9,14 +9,8 @@ class Building extends FlxSprite {
 	}
 
 	public function destroyBuilding() {
-		this.kill();
-	}
-
-	override function update(elapsed:Float) {
-		if (FlxG.mouse.justPressedMiddle && FlxG.mouse.overlaps(this)) {
-			kill();
-		}
-
-		super.update(elapsed);
+		var explode = new Explosion(x, y, 100);
+		(cast(FlxG.state, PlayState)).explosionGroup.add(explode);
+		kill();
 	}
 }
