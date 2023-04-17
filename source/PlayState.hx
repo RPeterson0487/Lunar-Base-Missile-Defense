@@ -22,6 +22,9 @@ class PlayState extends FlxState {
 	var timerRemaining:Float = TIMER_MAX;
 	var hud:HUD;
 	var gameOver:Bool = false;
+	var waveCount:Int = 0;
+	var maxNumberOfMissiles:Int = 2;
+	var difficulty:Int = 1;
 
 	override public function create() {
 		super.create();
@@ -46,11 +49,7 @@ class PlayState extends FlxState {
 			FlxG.switchState(new PlayState());
 		}
 
-		timerRemaining -= elapsed;
-		if (timerRemaining <= 0 && !gameOver) {
-			fireEnemyMissiles();
-			timerRemaining += TIMER_MAX;
-		}
+		fireEnemyMissiles(elapsed);
 
 		FlxG.overlap(explosionGroup, enemyMissileGroup, collideEnemyMissileAndExplosion);
 		FlxG.overlap(enemyMissileGroup, buildingsGroup, collideEnemyMissileAndBuilding);
@@ -113,14 +112,24 @@ class PlayState extends FlxState {
 		}
 	}
 
-	function fireEnemyMissiles() {
-		var numberOfMissiles = FlxG.random.int(1, 5);
+	function increaseDifficulty() {
+		// decide difficulty logic.  Probably increase every five or ten "waves."
+	}
 
-		for (i in 1...numberOfMissiles) {
-			var launchPosition = FlxG.random.float(0, FlxG.width);
-			var target = buildingsGroup.members[FlxG.random.int(0, buildingsGroup.length - 1)];
-			var incoming = new EnemyMissile(launchPosition, 0, target);
-			enemyMissileGroup.add(incoming);
+	function fireEnemyMissiles(elapsed:Float) {
+		var numberOfMissiles = FlxG.random.int(1, maxNumberOfMissiles);
+
+		timerRemaining -= elapsed;
+
+		if (timerRemaining <= 0 && !gameOver) {
+			for (i in 1...numberOfMissiles) {
+				var launchPosition = FlxG.random.float(0, FlxG.width);
+				var target = buildingsGroup.members[FlxG.random.int(0, buildingsGroup.length - 1)];
+				var incoming = new EnemyMissile(launchPosition, 0, target);
+				enemyMissileGroup.add(incoming);
+			}
+			timerRemaining += TIMER_MAX;
+			waveCount += 1;
 		}
 	}
 
